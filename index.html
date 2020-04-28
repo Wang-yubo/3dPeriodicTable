@@ -4,29 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/data.js"></script>
+    <script src="./js/index.js"></script>
     <title>Document</title>
-    <link rel="stylesheet" href="./src/css/index.css">
-    <script src="./src/js/data.js"></script>
-    <script src="./src/js/index.js"></script>
 </head>
 
 <body>
-    <!-- *整个项目 -->
+    <!-- 整个项目 -->
     <div id="all">
-        <!-- *左侧主体 -->
+        <!-- 左侧的主体区域 -->
         <div id="main">
-            <!-- *左侧展示区域 -->
+
+
+            <!-- 所有li展示列表区域 -->
             <div id="list">
                 <ul>
-                    <li>
-                        <!-- <b class="cover"></b>
-                        <p class="title">css</p>
-                        <p class="author">111</p>
-                        <p class="time">2020</p> -->
-                    </li>
+                    <!-- <li>
+              <b class="cover"></b>
+              <p class="title">CSS</p>
+              <p class="author">无为</p>
+              <p class="time">2019-11-29</p>
+            </li> -->
                 </ul>
             </div>
-            <!-- *按钮区域 -->
+
+            <!-- 左下角按钮 -->
             <div id="btn">
                 <ul>
                     <li>Table</li>
@@ -35,29 +39,41 @@
                     <li>Grid</li>
                 </ul>
             </div>
+
+
+            <!-- 弹窗区域 -->
+            <div id="alert">
+                <!-- 标题 -->
+                <div class="title">
+                    <span>课题: 我感觉你在为难我</span>
+                </div>
+
+                <!-- 图片 -->
+                <div class="img">
+                    <img src="./img/test.png" alt="">
+                </div>
+
+                <!-- 作者 -->
+                <div class="author">
+                    <span>主讲: 你好</span>
+                </div>
+
+                <!-- 项目描述信息 -->
+                <div class="info">
+                    <span>描述: 这大概是我讲过最屌的案例了...</span>
+                </div>
+            </div>
+
+
+
+            <!-- 返回按钮 -->
+            <div id="back">Back</div>
         </div>
-        <!-- *项目右侧主体 -->
-        <div id="alert">
-            <!-- *标题 -->
-            <div class="title">
-                <span>课题:我感觉你在为难我</span>
-            </div>
-            <div class="img">
-                <img src="" alt="">
-            </div>
-            <!-- *作者 -->
-            <div class="author">
-                <span>主讲:你好</span>
-            </div>
-            <!-- *项目描述信息 -->
-            <div class="info">
-                <span>描述:先占位</span>
-            </div>
-        </div>
-        <!-- *返会按钮 -->
-        <div id="back">Back</div>
+
+
+        <!-- 右侧区域 -->
+        <iframe id="frame" scrolling='no' src="" frameborder="0"></iframe>
     </div>
-    <iframe id="frame" scrolling="no" src="" frameborder="0"></iframe>
 </body>
 
 </html>

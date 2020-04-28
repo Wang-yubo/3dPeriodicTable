@@ -25,11 +25,11 @@ window.onload = function() {
                 var data = flyData[i] || flyData[0]
 
                 oLi.innerHTML = `
-          <b class="cover"></b>
-          <p class="type">${data.name}</p>
-          <p class="author">${data.sign}</p>
-          <p class="time">${data.atomicMass}</p>
-        `
+            <b class="cover"></b>
+            <p class="title">${data.type}</p>
+            <p class="author">${data.author}</p>
+            <p class="time">${data.time}</p>
+          `
 
                 // 随机确定li的位置
                 var tx = Math.random() * 6000 - 3000;
@@ -105,7 +105,9 @@ window.onload = function() {
                 // 鼠标松开
                 this.onmouseup = function(ev) {
                     if (ifMove && (ev.target === thisLi) || (new Date() - ifTime) > 500) {
-                        thisLi.goudan = true;
+                        if (ev.target.nodeName === 'B') {
+                            thisLi.goudan = true
+                        }
                     }
 
                     // 清楚鼠标移动事件
@@ -156,6 +158,7 @@ window.onload = function() {
 
 
         })();
+
 
         // Alert弹窗
         (function() {
@@ -298,27 +301,197 @@ window.onload = function() {
             }
 
 
+        })();
+
+        // 左下角的点击按钮
+        (function() {
+            var aBtn = document.getElementById('btn').getElementsByTagName('li');
+            var arr = [Table, Sphere, Heilx, Grid]
+
+            // aBtn[0].onclick = arr[0];
+            // aBtn[1].onclick = arr[1];
+            // aBtn[2].onclick = arr[2];
+            // aBtn[3].onclick = arr[3]
+
+            // for (var i = 0; i < aBtn.length; i++) {
+            //   aBtn[i].onclick = arr[i]
+            // }
+
+            var btnArr = [...aBtn]
+            btnArr.forEach(function(btn, index) {
+                btn.onclick = arr[index]
+            })
         })()
 
+        // Table 元素周期表
+        function Table() {
+            if (Table.arr) {
+                for (var i = 0; i < len; i++) {
+                    aLi[i].style.transform = Table.arr[i]
+                }
+            } else {
+                console.log("Table")
+
+                Table.arr = [];
+
+                // 计算坐标
+                var n = Math.ceil(len / 18) + 2; // 计算一共排列多好行
+                var midY = n / 2 - 0.5; // 计算ul所在的行
+                var midX = 18 / 2 - 0.5; // 计算ul所在的列
+
+                // 每个li 水平垂直的间距
+                var disY = 210;
+                var disX = 170;
+
+                // 开始的18 固定li的坐标
+                var arr = [
+                    { x: 0, y: 0, },
+                    { x: 17, y: 0, },
+                    { x: 0, y: 1, },
+                    { x: 1, y: 1, },
+                    { x: 12, y: 1, },
+                    { x: 13, y: 1, },
+                    { x: 14, y: 1, },
+                    { x: 15, y: 1, },
+                    { x: 16, y: 1, },
+                    { x: 17, y: 1, },
+                    { x: 0, y: 2, },
+                    { x: 1, y: 2, },
+                    { x: 12, y: 2, },
+                    { x: 13, y: 2, },
+                    { x: 14, y: 2, },
+                    { x: 15, y: 2, },
+                    { x: 16, y: 2, },
+                    { x: 17, y: 2, },
+                ]
+
+                // 循环计算li的位置
+                for (var i = 0; i < len; i++) {
+                    var x, y;
+                    if (i < 18) {
+                        x = arr[i].x
+                        y = arr[i].y
+                    } else {
+                        x = i % 18;
+                        y = Math.floor(i / 18) + 2
+                    }
+
+
+                    var val = `translate3d(${(x - midX) * disX}px, ${(y - midY) * disY}px , 0px)`;
+
+                    Table.arr[i] = val
+                    aLi[i].style.transform = val;
+                }
+            }
+        }
+
+        // Sphere  球形
+        function Sphere() {
+            if (Sphere.arr) {
+
+                for (var i = 0; i < len; i++) {
+                    aLi[i].style.transform = Sphere.arr[i];
+                }
+            } else {
+                console.log("Sphere")
+
+                Sphere.arr = []
+
+                // 确定球的每个牌面有多少个li
+                var arr = [1, 3, 7, 9, 11, 14, 21, 20, 12, 10, 9, 7, 1];
+                var arrLen = arr.length; // 球一共有多少层
+                var xDeg = 180 / (arrLen - 1); // 计算每一层li绕X轴旋转多少度
+
+                // 循环设置
+                for (var i = 0; i < len; i++) {
+
+                    // 定义变量计算当前的li是第几层,以及当前层的第几个li
+                    var numC = 0; // 保存li在第几层
+                    var numG = 0; // 保存li在当前层的第几个
+                    var arrSum = 0; // 用来确定li之前层的总数
+
+                    // 判断li的层以及在当前层的第几个
+                    for (var j = 0; j < arrLen; j++) {
+                        arrSum += arr[j] // arrSum  1 4
+                        if (i < arrSum) {
+                            numC = j // 计算当前li的层
+                            numG = i - (arrSum - arr[j]); // 计算当前li处于当前层的第几个
+                            break; // 当我们确定li所在的层,以及所在层的第几个之后,跳出j的循环
+                        }
+                    }
+
+                    // 更加li所在的层的li的个数,确定li的绕着y轴旋转的度数
+                    var yDeg = 360 / arr[numC]
+
+                    var val = `rotateY(${(numG + 1.2) * yDeg}deg) rotateX(${90 - numC * xDeg}deg) translateZ(800px)`;
+                    Sphere.arr[i] = val
+                    aLi[i].style.transform = val;
+                }
+            }
+
+        }
+
+
+        // Heilx 螺旋
+        function Heilx() {
+            if (Heilx.arr) {
+                for (var i = 0; i < len; i++) {
+                    aLi[i].style.transform = Heilx.arr[i]
+                }
+
+            } else {
+                console.log("Heilx")
+                Heilx.arr = [];
+
+                var h = 4; // 圈数
+                var tY = 7; // 每个li上下错位7 像素
+                var num = Math.round(len / h); // 计算每一圈多少个li
+                var deg = 360 / num; // 计算每一个li的旋转度数
+                var mid = len / 2 - 0.5; // 确定ul的位置
+
+                for (var i = 0; i < len; i++) {
+                    var val = `rotateY(${i * deg}deg) translateY(${tY * (i - mid)}px) translateZ(800px)`;
+                    Heilx.arr[i] = val
+                    aLi[i].style.transform = val;
+                }
+            }
+
+
+        }
 
         //  Grid 层叠样式 
         function Grid() {
 
-            // 确定每个li之间水平垂直,以及z轴的间隔
-            var disX = 350;
-            var disY = 350;
-            var disZ = 800;
+            if (Grid.arr) {
+                for (var i = 0; i < len; i++) {
+                    aLi[i].style.transform = Grid.arr[i];
+                }
+            } else {
+                console.log("Grid")
 
-            for (var i = 0; i < len; i++) {
-                var oLi = aLi[i];
+                Grid.arr = []
 
-                // 通过li的位置计算li的偏移量
-                var x = (oLi.x - 2) * disX;
-                var y = (oLi.y - 2) * disY;
-                var z = (oLi.z - 2) * disZ;
+                // 确定每个li之间水平垂直,以及z轴的间隔
+                var disX = 350;
+                var disY = 350;
+                var disZ = 800;
 
-                oLi.style.transform = `translate3d(${x}px, ${y}px , ${z}px)`;
+                for (var i = 0; i < len; i++) {
+                    var oLi = aLi[i];
+
+                    // 通过li的位置计算li的偏移量
+                    var x = (oLi.x - 2) * disX;
+                    var y = (oLi.y - 2) * disY;
+                    var z = (oLi.z - 2) * disZ;
+
+                    var val = `translate3d(${x}px, ${y}px , ${z}px)`;
+                    Grid.arr[i] = val
+                    oLi.style.transform = val;
+                }
+
+                // console.log(Grid.arr)
             }
+
         }
     })()
 }

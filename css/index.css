@@ -1,4 +1,5 @@
-@charset "UTF8";
+@charset 'UTF-8';
+/* 初始化信息 */
 * {
   margin: 0;
   padding: 0;
@@ -13,15 +14,15 @@ body {
   width: 100%;
   height: 100%;
 }
-/* 
-* all
-*/
+/* main */
 #all {
   position: absolute;
   left: 0;
   width: 200%;
   height: 100%;
   transition: 1s;
+  /* main */
+  /* iframe */
 }
 #all.left {
   left: -100%;
@@ -31,9 +32,8 @@ body {
   position: relative;
   width: 50%;
   height: 100%;
-  background: #0e0d0d url('../images/01.jpg') center;
+  background: #023b3b url('../img/01.jpg') center;
   perspective: 800px;
-  /* iframe */
 }
 #all #main #list ul {
   position: absolute;
@@ -43,12 +43,10 @@ body {
   margin-left: -60px;
   width: 120px;
   height: 160px;
-  background-color: pink;
   transform-style: preserve-3d;
   transform: translateZ(-2000px) rotateX(0deg) rotateY(0deg);
 }
 #all #main #list ul li {
-  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
@@ -215,12 +213,12 @@ body {
 #all #main #back:hover {
   background: rgba(0, 127, 127, 0.8);
 }
-#all #main #frame {
+#all #frame {
   overflow: auto;
   float: left;
   position: absolute;
   right: 0;
-  z-index: 80;
+  z-index: 80px;
   width: 50%;
   height: 100%;
 }
